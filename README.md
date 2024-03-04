@@ -37,3 +37,7 @@ make folder for helper named util, to make path for root folder clean code
 make some nice add product and shop menu
 
 make public folder, with static file system
+
+make products empty array to make product data in routes and send to shop, that require admin
+
+using EJS templating engine, npm install ejs
