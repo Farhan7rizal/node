@@ -40,4 +40,12 @@ make public folder, with static file system
 
 make products empty array to make product data in routes and send to shop, that require admin
 
-using EJS templating engine, npm install ejs
+using EJS templating engine, npm install ejs, initiate them
+
+copy some css code from the course,
+
+add data to res.render in shop and admin js
+
+using ejs , showing data with ejs and do looping
+
+layout with partial in ejs

@@ -1,30 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= pageTitle %></title>
-    <link rel="stylesheet" href="/css/main.css">
-    <style>
-      
-      h1{
-        margin: 1rem 0;
-        padding: 3rem;
-      }
-    </style>
-  </head>
-  <body>
-    <header class="main-header">
-      <nav class="main-header__nav">
-        <ul class="main-header__item-list">
-          <li class="main-header__item"><a href="/">Shop</a></li>
-          <li class="main-header__item">
-            <a class=" " href="/admin/add-product">Add Product</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+<%- include('includes/head.ejs') %>
+<body>
+  <%- include('includes/navigation.ejs') %>
   <body>
     <h1>Page no Found!</h1>
+    <%- include('includes/end.ejs') %>
   </body>
-</html>
+</body>

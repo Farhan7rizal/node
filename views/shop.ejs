@@ -1,26 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= pageTitle %></title>
-    <link rel="stylesheet" href="/css/main.css" />
+<%- include('includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css" />
+    <link rel="stylesheet" href="/css/product.css" />
   </head>
   <body>
-    <header class="main-header">
-      <nav class="main-header__nav">
-        <ul class="main-header__item-list">
-          <li class="main-header__item"><a class="active" href="/">Shop</a></li>
-          <li class="main-header__item">
-            <a href="/admin/add-product">Add Product</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <%- include('includes/navigation.ejs') %>
 
     <main>
-      <h1>My Products</h1>
-      <p>List of all the products...</p>
+      <% if (prods.length > 0) { %>
+      <div class="grid">
+        <% for (let product of prods) { %>
+        <article class="card product-item">
+          <header class="card-header">
+            <h1 class="product__title"><%= product.title %></h1>
+          </header>
+          <div class="card__image">
+            <img
+              src="https://assets-prd.ignimgs.com/2021/02/22/legend-of-mana-button-fin-1614037285244.jpg"
+              alt="book of mana"
+            />
+          </div>
+          <div class="card__content">
+            <h2 class="product__price">100k</h2>
+            <p class="product__description">A very legendary book</p>
+          </div>
+          <div class="card__actions">
+            <button class="btn">Add to chart</button>
+          </div>
+        </article>
+        <% } %>
+      </div>
+      <% } else { %>
+      <h1>Product not found!</h1>
+      <% } %>
     </main>
-  </body>
-</html>
+    <%- include('includes/end.ejs') %>
