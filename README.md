@@ -49,3 +49,18 @@ add data to res.render in shop and admin js
 using ejs , showing data with ejs and do looping
 
 layout with partial in ejs
+
+<% prods.forEach((prod) => { %>
+
+<%= prod.title %>
+
+<% }) %>
+
+MVC (Model, View, Controller), create controller file and then link/eksports , to be use in routes, why 404 is failed?
+
+create models for product, using class, require them on controller products, call it in get and post router
+using product make blurprint using new Product(...) so the view can comunicate with controller
+
+save data to a file, in product model using callback
+
+make (refactoring) a helper in product model
