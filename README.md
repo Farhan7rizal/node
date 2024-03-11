@@ -64,3 +64,21 @@ using product make blurprint using new Product(...) so the view can comunicate w
 save data to a file, in product model using callback
 
 make (refactoring) a helper in product model
+
+refactoring to admin and shop folder in views
+
+adding more views mean more feature, add more code into navigation
+
+registering new route, add new exports.get.. in controller, make empty ejs for now
+
+editing products model, to make product form, in view we extract data by name in the form
+
+display product data (view)
+
+editing and deleting product
+
+adding another item, Orders
+
+section 9, dynamic routes & advanced models
+
+refactoring file structures

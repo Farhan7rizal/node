@@ -1,9 +1,9 @@
-<%- include('includes/head.ejs') %>
+<%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/css/forms.css" />
     <link rel="stylesheet" href="/css/product.css" />
   </head>
   <body>
-    <%- include('includes/navigation.ejs') %>
+    <%- include('../includes/navigation.ejs') %>
 
     <main>
       <% if (prods.length > 0) { %>
@@ -14,17 +14,19 @@
             <h1 class="product__title"><%= product.title %></h1>
           </header>
           <div class="card__image">
-            <img
-              src="https://assets-prd.ignimgs.com/2021/02/22/legend-of-mana-button-fin-1614037285244.jpg"
-              alt="book of mana"
+            <img <img src="<%= product.imageUrl %>"           
+            alt="<%= product.imageUrl %>"
             />
           </div>
           <div class="card__content">
-            <h2 class="product__price">100k</h2>
-            <p class="product__description">A very legendary book</p>
+            <h2 class="product__price"><%= product.price %></h2>
+            <p class="product__description"><%= product.description %></p>
           </div>
           <div class="card__actions">
-            <button class="btn">Add to chart</button>
+            <a href="admin/edit-product" class="btn">Edit</a>
+            <form action="/admin/delete-product" method="POST">
+                <button class="btn" type="submit">Delete</button>
+            </form>
           </div>
         </article>
         <% } %>
@@ -33,4 +35,4 @@
       <h1>Product not found!</h1>
       <% } %>
     </main>
-    <%- include('includes/end.ejs') %>
+    <%- include('../includes/end.ejs') %>
