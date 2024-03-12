@@ -82,3 +82,20 @@ adding another item, Orders
 section 9, dynamic routes & advanced models
 
 refactoring file structures
+
+adding product id, in the model also in view
+
+//dynamic route is order after static routes ???
+
+add dynamic params in routes, so we can get that detail id
+
+loading detail product after get the specific id (using find(p => ....))
+
+editing detail product to show data in view and controller
+
+make cart logic in controller, routes, and view . passing hidden data, id
+
+Cannot read properties of undefined (reading 'title') because pageTitle in shop controller is undefine, but product it's define, so using this code bellow, to solve the problem, for now, so the red error is gone
+if (product != undefined) {
+cb(product);
+}
