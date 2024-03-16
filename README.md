@@ -99,3 +99,15 @@ Cannot read properties of undefined (reading 'title') because pageTitle in shop 
 if (product != undefined) {
 cb(product);
 }
+
+adding cart model, logic so hard to understand, but it's all right
+
+make edit-product.ejs usable in add and edit product. to pass data in url query params, we need id and information to edit product (in route). http://localhost:3000/admin/edit-product/0.9381823975874011?edit=true
+
+pre-populate data in edit form, using prodId model in controller
+
+add post edit-product in router
+
+edit mode, add an id in product model, if existing product, not a new random id, add null for id in admin controller, make sure to read file from FS or database
+
+add delete feature to products and cart item, using filter, !== if not that id will keep into new array
