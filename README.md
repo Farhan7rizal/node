@@ -115,3 +115,7 @@ add delete feature to products and cart item, using filter, !== if not that id w
 add delete cart feature in cart model, while delete product also delete product that in the cart, require Cart in product model
 
 displaying cart item, get cart function in model, use then in the controller,
+
+deleting cart item, only cart item
+
+(bug) deleting product but can't bc of product.qty
