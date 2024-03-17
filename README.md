@@ -113,3 +113,5 @@ edit mode, add an id in product model, if existing product, not a new random id,
 add delete feature to products and cart item, using filter, !== if not that id will keep into new array
 
 add delete cart feature in cart model, while delete product also delete product that in the cart, require Cart in product model
+
+displaying cart item, get cart function in model, use then in the controller,
