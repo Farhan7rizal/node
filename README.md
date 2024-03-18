@@ -119,3 +119,9 @@ displaying cart item, get cart function in model, use then in the controller,
 deleting cart item, only cart item
 
 (bug) deleting product but can't bc of product.qty
+
+CREATE TABLE `nodejs`.`products` (`id` INT(4) UNSIGNED NOT NULL AUTO_INCREMENT , `title` VARCHAR(255) NOT NULL , `price` DOUBLE NOT NULL , `description` TEXT NOT NULL , `imageUrl` VARCHAR(255) NOT NULL , PRIMARY KEY (`id`(4))) ENGINE = InnoDB;
+
+using db.execute()
+
+new product model with database
