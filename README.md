@@ -130,4 +130,4 @@ insert data with save() into DB, fetching a single product
 
 sequelize (package), focus on nodejs not on SQL. npm install --save sequelize, delete prev products table
 
-delete all product model code, then add new table with js syntax
+delete all product model code, then add new table with js syntax,syncs your models to the database
