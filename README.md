@@ -124,4 +124,6 @@ CREATE TABLE `nodejs`.`products` (`id` INT(4) UNSIGNED NOT NULL AUTO_INCREMENT ,
 
 using db.execute()
 
-new product model with database
+new product model with database, fetchAll with destructuring (pull out information), same with getProducts
+
+insert data with save() into DB, fetching a single product
