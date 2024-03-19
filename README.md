@@ -127,3 +127,7 @@ using db.execute()
 new product model with database, fetchAll with destructuring (pull out information), same with getProducts
 
 insert data with save() into DB, fetching a single product
+
+sequelize (package), focus on nodejs not on SQL. npm install --save sequelize, delete prev products table
+
+delete all product model code, then add new table with js syntax
