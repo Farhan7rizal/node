@@ -135,3 +135,5 @@ delete all product model code, then add new table with js syntax,syncs your mode
 add new item through sequelize, With Sequelize v5, findById() (which we'll use in this course) was replaced by findByPk().
 
 using findAll and find where to show detail product
+
+update and deleteing product using sequelize
