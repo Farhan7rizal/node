@@ -147,3 +147,9 @@ make a dummy user in app.js
 find user and store it to req.user = user
 
 using association method through sequelize, req.user.createProduct() we can use this bc we have Product.belongsTo(User); and User.hasMany(Product);
+
+One-to-many and many-to-many in Cart through cart-item, confused but this is the point
+
+creating a cart and fetching cart, create cart first in app.js, then logic magic happen like we do in cartFS
+
+<!-- SELECT `product`.`id`, `product`.`title`, `product`.`price`, `product`.`imageUrl`, `product`.`description`, `product`.`createdAt`, `product`.`updatedAt`, `product`.`userId`, `cartItem`.`id` AS `cartItem.id`, `cartItem`.`quantity` AS `cartItem.quantity`, `cartItem`.`createdAt` AS `cartItem.createdAt`, `cartItem`.`updatedAt` AS `cartItem.updatedAt`, `cartItem`.`cartId` AS `cartItem.cartId`, `cartItem`.`productId` AS `cartItem.productId` FROM `products` AS `product` INNER JOIN `cartItems` AS `cartItem` ON `product`.`id` = `cartItem`.`productId` AND `cartItem`.`cartId` = 1; -->
