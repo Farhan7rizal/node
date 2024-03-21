@@ -137,3 +137,13 @@ add new item through sequelize, With Sequelize v5, findById() (which we'll use i
 using findAll and find where to show detail product
 
 update and deleteing product using sequelize
+
+create user model
+
+assosiation / relationship , read Sequelize documantation for more. .sync({ force: true }) is make all new table and reset data
+
+make a dummy user in app.js
+
+find user and store it to req.user = user
+
+using association method through sequelize, req.user.createProduct() we can use this bc we have Product.belongsTo(User); and User.hasMany(Product);

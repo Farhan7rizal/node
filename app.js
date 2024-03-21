@@ -10,6 +10,17 @@ app.set('views', 'views'); //views in views folder
 
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
+const Product = require('./models/product');
+const User = require('./models/user');
+
+app.use((req, res, next) => {
+  User.findByPk(1)
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => console.log(err));
+});
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
@@ -29,10 +40,24 @@ app.use(shopRoutes);
 // });
 app.use(errorController.get404);
 
+Product.belongsTo(User, { constraint: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
+
 sequelize
+  // .sync({ force: true })
   .sync()
   .then((result) => {
+    return User.findByPk(1);
     // console.log(result);
+  })
+  .then((user) => {
+    if (!user) {
+      User.create({ name: 'Max', email: 'test@test@gmail.com' });
+    }
+    return user;
+  })
+  .then((user) => {
+    console.log(user);
     app.listen(3000);
   })
   .catch((err) => {
