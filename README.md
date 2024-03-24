@@ -155,3 +155,22 @@ creating a cart and fetching cart, create cart first in app.js, then logic magic
 <!-- SELECT `product`.`id`, `product`.`title`, `product`.`price`, `product`.`imageUrl`, `product`.`description`, `product`.`createdAt`, `product`.`updatedAt`, `product`.`userId`, `cartItem`.`id` AS `cartItem.id`, `cartItem`.`quantity` AS `cartItem.quantity`, `cartItem`.`createdAt` AS `cartItem.createdAt`, `cartItem`.`updatedAt` AS `cartItem.updatedAt`, `cartItem`.`cartId` AS `cartItem.cartId`, `cartItem`.`productId` AS `cartItem.productId` FROM `products` AS `product` INNER JOIN `cartItems` AS `cartItem` ON `product`.`id` = `cartItem`.`productId` AND `cartItem`.`cartId` = 1; -->
 
 add new product in the cart (through cart item), so confused because sequelize in node js syntax
+
+update new qty if product in cart exist,
+
+<!-- UPDATE `cartItems` SET `quantity`=?,`updatedAt`=? WHERE `cartId` = ? AND `productId` = ? -->
+
+delete cart item in between cartItem table that connect product and cart table
+
+add order.js and order-item.js for order system
+
+store cartItem as orderItem with sequelize syntax, mencoba mengerti walau susah dan butuh waktu
+
+<!-- Executing (default): INSERT INTO `orders` (`id`,`createdAt`,`updatedAt`,`userId`) VALUES (DEFAULT,?,?,?);
+
+Executing (default): SELECT `id`, `quantity`, `createdAt`, `updatedAt`, `orderId`, `productId` FROM
+`orderItems` AS `orderItem` WHERE `orderItem`.`orderId` = 5 AND `orderItem`.`productId` IN (1, 2, 3);
+
+Executing (default): INSERT INTO `orderItems` (`id`,`quantity`,`createdAt`,`updatedAt`,`orderId`,`productId`) VALUES (NULL,3,'2024-03-23 14:35:02','2024-03-23 14:35:02',5,1),(NULL,2,'2024-03-23 14:35:02','2024-03-23 14:35:02',5,2),(NULL,1,'2024-03-23 14:35:02','2024-03-23 14:35:02',5,3); -->
+
+reseting the cart, fetching and outputting.
