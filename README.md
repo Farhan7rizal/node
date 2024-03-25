@@ -174,3 +174,5 @@ Executing (default): SELECT `id`, `quantity`, `createdAt`, `updatedAt`, `orderId
 Executing (default): INSERT INTO `orderItems` (`id`,`quantity`,`createdAt`,`updatedAt`,`orderId`,`productId`) VALUES (NULL,3,'2024-03-23 14:35:02','2024-03-23 14:35:02',5,1),(NULL,2,'2024-03-23 14:35:02','2024-03-23 14:35:02',5,2),(NULL,1,'2024-03-23 14:35:02','2024-03-23 14:35:02',5,3); -->
 
 reseting the cart, fetching and outputting.
+
+need to learn javascript beginner again or mysql from beginner.
