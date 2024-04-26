@@ -176,3 +176,7 @@ Executing (default): INSERT INTO `orderItems` (`id`,`quantity`,`createdAt`,`upda
 reseting the cart, fetching and outputting.
 
 need to learn javascript beginner again or mysql from beginner.
+
+branch that we add mongoDB, never commit and push
+
+npm install --save mongodb
