@@ -182,3 +182,5 @@ branch that we add mongoDB, never commit and push
 npm install --save mongodb
 
 make new connection through database.js, and import it in app js
+
+add new mongo model in product model
