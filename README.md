@@ -184,3 +184,5 @@ npm install --save mongodb
 make new connection through database.js, and import it in app js
 
 add new mongo model in product model
+
+tweak database.js and call getDb in products model
