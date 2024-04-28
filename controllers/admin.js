@@ -13,27 +13,17 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  // Product.create({
-  //   title: title,
-  //   price: price,
-  //   imageUrl: imageUrl,
-  //   description: description,
-  //   userId: req.user.id,
-  // })
-  req.user
-    .createProduct({
-      title: title,
-      price: price,
-      imageUrl: imageUrl,
-      description: description,
-    })
+  const product = new Product(title, price, description, imageUrl);
+
+  product
+    .save()
     .then((result) => {
       console.log(result);
       res.redirect('/admin/products');
     })
     .catch((err) => {
       console.log(err);
-    });
+    }); //don't forget to return in save() models
 };
 
 // exports.getEditProduct = (req, res, next) => {

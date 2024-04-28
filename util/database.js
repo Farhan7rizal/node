@@ -7,7 +7,7 @@ const mongoConnect = (callback) => {
   MongoClient.connect('mongodb://localhost:27017')
     .then((client) => {
       console.log('Connected');
-      _db = client.db;
+      _db = client.db('shop'); //create here or if exist
       callback(client);
     })
     .catch((err) => {
