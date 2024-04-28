@@ -13,7 +13,7 @@ app.set('views', 'views'); //views in views folder
 const adminRoutes = require('./routes/admin');
 // const shopRoutes = require('./routes/shop');
 
-const mongoConnect = require('./util/database');
+const mongoConnect = require('./util/database').mongoConnect;
 
 app.use((req, res, next) => {
   // User.findByPk(1)
@@ -22,6 +22,7 @@ app.use((req, res, next) => {
   //     next();
   //   })
   //   .catch((err) => console.log(err));
+  next();
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));

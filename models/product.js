@@ -7,28 +7,18 @@ class Product {
     this.description = description;
     this.imageUrl = imageUrl;
   }
-}
 
-const Product = sequelize.define('product', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true,
-  },
-  title: Sequelize.STRING,
-  price: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  imageUrl: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-});
+  save() {
+    const db = getDb(); //connection to db
+    db.collection('products')
+      .insertOne(this)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      }); //collection in db
+  }
+}
 
 module.exports = Product;
