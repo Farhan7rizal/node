@@ -11,7 +11,7 @@ router.get('/', shopController.getIndex);
 router.get('/products', shopController.getProducts);
 
 //dynamic route is order after static routes ???
-// router.get('/products/:productId', shopController.getProduct);
+router.get('/products/:productId', shopController.getProduct);
 
 // router.get('/cart', shopController.getCart);
 
