@@ -188,3 +188,7 @@ add new mongo model in product model
 tweak database.js and call getDb in products model
 
 add fetchAll in products model
+
+rest note before is in github history
+
+aware of not defined mean the variabel not set or miss
