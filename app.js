@@ -14,14 +14,15 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 const mongoConnect = require('./util/database').mongoConnect;
+const User = require('./models/user');
 
 app.use((req, res, next) => {
-  // User.findByPk(1)
-  //   .then((user) => {
-  //     req.user = user;
-  //     next();
-  //   })
-  //   .catch((err) => console.log(err));
+  User.findByPk('6630f406d94e149edfb4552e')
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => console.log(err));
   next();
 });
 
