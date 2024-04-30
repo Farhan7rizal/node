@@ -47,7 +47,6 @@ class Product {
 
   static findById(prodId) {
     const db = getDb();
-
     return db
       .collection('products')
       .find({ _id: ObjectId.createFromHexString(prodId) })
@@ -55,6 +54,20 @@ class Product {
       .then((product) => {
         // console.log(product);
         return product;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  static deleteById(prodId) {
+    const db = getDb();
+
+    return db
+      .collection('products')
+      .deleteOne({ _id: ObjectId.createFromHexString(prodId) })
+      .then((result) => {
+        console.log(deleted);
       })
       .catch((err) => {
         console.log(err);
