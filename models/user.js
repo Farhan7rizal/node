@@ -1,5 +1,5 @@
 const mongodb = require('mongodb');
-const getDb = require('../util/database');
+const getDb = require('../util/database').getDb;
 const { ObjectId } = require('mongodb');
 
 class User {
@@ -17,7 +17,14 @@ class User {
     const db = getDb();
     return db
       .collection('users')
-      .find({ _id: ObjectId.createFromHexString(userId) });
+      .findOne({ _id: ObjectId.createFromHexString(userId) })
+      .then((user) => {
+        console.log(user);
+        return user;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 module.exports = User;

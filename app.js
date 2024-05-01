@@ -17,13 +17,12 @@ const mongoConnect = require('./util/database').mongoConnect;
 const User = require('./models/user');
 
 app.use((req, res, next) => {
-  User.findByPk('6630f406d94e149edfb4552e')
+  User.findById('6630f406d94e149edfb4552e')
     .then((user) => {
       req.user = user;
       next();
     })
     .catch((err) => console.log(err));
-  next();
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
