@@ -19,7 +19,7 @@ const User = require('./models/user');
 app.use((req, res, next) => {
   User.findById('6630f406d94e149edfb4552e')
     .then((user) => {
-      req.user = user;
+      req.user = new User(user.name, user.email, user.cart, user._id);
       next();
     })
     .catch((err) => console.log(err));
