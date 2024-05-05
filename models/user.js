@@ -63,10 +63,9 @@ class User {
       items: updatedCartItems,
     };
     const db = getDb();
-    db.collection('users').updateOne(
-      { _id: this._id },
-      { $set: { cart: updatedCart } }
-    );
+    return db
+      .collection('users')
+      .updateOne({ _id: this._id }, { $set: { cart: updatedCart } });
   }
 
   getCart() {
@@ -92,6 +91,19 @@ class User {
           };
         });
       });
+  }
+
+  deleteItemFromCart(productId) {
+    const updatedCartItems = this.cart.items.filter((item) => {
+      return item.productId.toString() !== productId.toString();
+    });
+    const db = getDb();
+    return db
+      .collection('users')
+      .updateOne(
+        { _id: this._id },
+        { $set: { cart: { items: updatedCartItems } } }
+      );
   }
 
   static findById(userId) {
