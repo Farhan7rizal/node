@@ -192,3 +192,5 @@ add fetchAll in products model
 rest note before is in github history
 
 aware of not defined mean the variabel not set or miss
+
+npm install --save mongoose
