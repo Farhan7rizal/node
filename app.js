@@ -2,6 +2,7 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');
 
@@ -13,7 +14,7 @@ app.set('views', 'views'); //views in views folder
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-const mongoConnect = require('./util/database').mongoConnect;
+// const mongoConnect = require('./util/database').mongoConnect;
 const User = require('./models/user');
 
 app.use((req, res, next) => {
@@ -40,7 +41,17 @@ app.use(shopRoutes);
 // });
 app.use(errorController.get404);
 
-mongoConnect((client) => {
-  // console.log(client);
-  app.listen(3000);
-});
+// mongoConnect((client) => {
+//   // console.log(client);
+//   app.listen(3000);
+// });
+
+mongoose
+  .connect('mongodb://localhost:27017')
+  .then((result) => {
+    console.log('connect');
+    app.listen(3000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
