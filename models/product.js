@@ -23,6 +23,8 @@ const productSchema = new Schema({
   },
 });
 
+module.exports = mongoose.model('Product', productSchema);
+
 // class Product {
 //   constructor(title, price, description, imageUrl, id, userId) {
 //     this.title = title;

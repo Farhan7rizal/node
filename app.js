@@ -15,16 +15,16 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 // const mongoConnect = require('./util/database').mongoConnect;
-const User = require('./models/user');
+// const User = require('./models/user');
 
-app.use((req, res, next) => {
-  User.findById('6632fa847d5b14c67f8214a2')
-    .then((user) => {
-      req.user = new User(user.name, user.email, user.cart, user._id);
-      next();
-    })
-    .catch((err) => console.log(err));
-});
+// app.use((req, res, next) => {
+//   User.findById('6632fa847d5b14c67f8214a2')
+//     .then((user) => {
+//       req.user = new User(user.name, user.email, user.cart, user._id);
+//       next();
+//     })
+//     .catch((err) => console.log(err));
+// });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -47,7 +47,7 @@ app.use(errorController.get404);
 // });
 
 mongoose
-  .connect('mongodb://localhost:27017')
+  .connect('mongodb://localhost:27017/shop2')
   .then((result) => {
     console.log('connect');
     app.listen(3000);
