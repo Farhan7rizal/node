@@ -126,6 +126,12 @@ class User {
           .collection('users')
           .updateOne({ _id: this._id }, { $set: { cart: { items: [] } } });
       });
+    //IMPORTANT ABOUT RELATION / DELETE ITEM ALSO DELETE IN CART WITH DIFF USER ????
+  }
+
+  getOrders() {
+    const db = getDb();
+    return db.collection('orders').find({ 'user._id': this._id }).toArray();
   }
 
   static findById(userId) {
