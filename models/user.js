@@ -3,8 +3,8 @@ const getDb = require('../util/database').getDb;
 const { ObjectId } = require('mongodb');
 
 class User {
-  constructor(username, email, cart, id) {
-    this.username = username;
+  constructor(name, email, cart, id) {
+    this.name = name;
     this.email = email;
     this.cart = cart; //{items: []}
     this._id = id;
@@ -108,9 +108,18 @@ class User {
 
   addOrder() {
     const db = getDb();
-    return db
-      .collection('orders')
-      .insertOne(this.cart)
+    return this.getCart()
+      .then((products) => {
+        const order = {
+          // items: this.cart.items,
+          items: products,
+          user: {
+            _id: this._id,
+            name: this.name,
+          },
+        };
+        return db.collection('orders').insertOne(order);
+      })
       .then((result) => {
         this.cart = { items: [] };
         return db
