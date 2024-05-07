@@ -6,12 +6,12 @@ const shopController = require('../controllers/shop');
 
 const router = express.Router();
 
-// router.get('/', shopController.getIndex);
+router.get('/', shopController.getIndex);
 
-// router.get('/products', shopController.getProducts);
+router.get('/products', shopController.getProducts);
 
-// //dynamic route is order after static routes ???
-// router.get('/products/:productId', shopController.getProduct);
+//dynamic route is order after static routes ???
+router.get('/products/:productId', shopController.getProduct);
 
 // router.get('/cart', shopController.getCart);
 
