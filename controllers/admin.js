@@ -83,8 +83,12 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+    // .select('title imageUrl -_id')
+    // .populate('userId', 'name')
     .then((products) => {
       console.log(products);
+      //select() allows you to define which fields you want to select or unselect
+      // populate() allows you to tell mongoose to populate a certain field with all the detail information and not just the ID,
       res.render('admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
