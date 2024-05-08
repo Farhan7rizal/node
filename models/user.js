@@ -2,6 +2,30 @@
 // const getDb = require('../util/database').getDb;
 // const { ObjectId } = require('mongodb');
 
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  cart: {
+    items: [
+      {
+        productId: { type: Schema.Types.ObjectId, required: true },
+        quantity: { type: Number, required: true },
+      },
+    ],
+  },
+});
+
+module.exports = mongoose.model('User', userSchema);
+
 // class User {
 //   constructor(name, email, cart, id) {
 //     this.name = name;
