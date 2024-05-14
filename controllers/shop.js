@@ -1,5 +1,6 @@
 const Product = require('../models/product');
-const { or } = require('sequelize');
+const Order = require('../models/order');
+// const { or } = require('sequelize');
 
 exports.getProducts = (req, res, next) => {
   Product.find()
@@ -151,9 +152,23 @@ exports.postCartDeleteProduct = (req, res, next) => {
 };
 
 exports.postOrders = (req, res, next) => {
-  let fetchedCart;
   req.user
-    .addOrder()
+    .populate('cart.items.productId')
+    .then((user) => {
+      // const products = user.cart.items;
+      const products = user.cart.items.map((i) => {
+        return { quantity: i.quantity, product: i.productId };
+      });
+      //I will simply not just extract items like this,I will also map the items so that I store the changed items in my products array and a mapped item should still have its quantity so I'll keep that, the i simply refers to the item since this function goes through all items in that array, so we'll have the quantity. And then we'll have a product field and the product
+      const order = new Order({
+        user: {
+          name: req.user.name,
+          userId: req.user,
+        },
+        products: products,
+      });
+      return order.save();
+    })
     .then((result) => {
       res.redirect('/orders');
     })
