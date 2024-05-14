@@ -157,7 +157,8 @@ exports.postOrders = (req, res, next) => {
     .then((user) => {
       // const products = user.cart.items;
       const products = user.cart.items.map((i) => {
-        return { quantity: i.quantity, product: i.productId };
+        return { quantity: i.quantity, product: { ...i.productId._doc } };
+        // {...i.productId._doc} this return document of productId key
       });
       //I will simply not just extract items like this,I will also map the items so that I store the changed items in my products array and a mapped item should still have its quantity so I'll keep that, the i simply refers to the item since this function goes through all items in that array, so we'll have the quantity. And then we'll have a product field and the product
       const order = new Order({
@@ -170,14 +171,16 @@ exports.postOrders = (req, res, next) => {
       return order.save();
     })
     .then((result) => {
+      return req.user.clearCart();
+    })
+    .then(() => {
       res.redirect('/orders');
     })
     .catch((err) => console.log(err));
 };
 
 exports.getOrders = (req, res, next) => {
-  req.user
-    .getOrders()
+  Order.find({ 'user.userId': req.user._id })
     .then((orders) => {
       res.render('shop/Orders', {
         path: '/orders',
