@@ -35,7 +35,7 @@ exports.getProduct = (req, res, next) => {
 exports.getIndex = (req, res, next) => {
   Product.find()
     .then((products) => {
-      console.log(products);
+      // console.log(products);
       res.render('shop/index', {
         prods: products,
         pageTitle: 'Shop',
@@ -89,7 +89,7 @@ exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findById(prodId)
     .then((product) => {
-      console.log(product);
+      // console.log(product);
       return req.user.addToCart(product);
     })
     .then((result) => {
