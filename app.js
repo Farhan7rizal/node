@@ -23,15 +23,6 @@ const authRoutes = require('./routes/auth');
 // const mongoConnect = require('./util/database').mongoConnect;
 const User = require('./models/user');
 
-app.use((req, res, next) => {
-  User.findById('663a2c6b2f23384c17625308')
-    .then((user) => {
-      req.user = user;
-      next();
-    })
-    .catch((err) => console.log(err));
-});
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
