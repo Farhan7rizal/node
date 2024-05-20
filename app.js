@@ -4,10 +4,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoDBstore = require('connect-mongodb-session')(session);
 
 const errorController = require('./controllers/error');
 
+const MONGODB_URI = 'mongodb://localhost:27017/shop2';
+
 const app = express();
+const store = new MongoDBstore({ uri: MONGODB_URI, collection: 'sessions' });
 
 app.set('view engine', 'ejs');
 app.set('views', 'views'); //views in views folder
@@ -31,7 +35,12 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
-  session({ secret: 'my secret', resave: false, saveUninitialized: false })
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
 );
 
 app.use('/admin', adminRoutes.routes);
@@ -53,7 +62,7 @@ app.use(errorController.get404);
 // });
 
 mongoose
-  .connect('mongodb://localhost:27017/shop2')
+  .connect(MONGODB_URI)
   .then((result) => {
     User.findOne().then((user) => {
       if (!user) {
