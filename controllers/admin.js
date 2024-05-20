@@ -29,7 +29,7 @@ exports.postAddProduct = (req, res, next) => {
     .save()
     .then((result) => {
       // the save() METHOD is coming from mongoose
-      console.log(result);
+      // console.log(result);
       res.redirect('/admin/products');
     })
     .catch((err) => {
