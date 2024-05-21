@@ -18,7 +18,13 @@ exports.postLogin = (req, res, next) => {
     .then((user) => {
       req.session.isLoggedIn = true;
       req.session.user = user;
-      res.redirect('/');
+      // res.redirect('/');
+      req.session.save((err) => {
+        //normally don't need to do that but you need to do it in scenarios where you need to be sure that,your session was created before you continue because here, you can pass in a function that will be called once you're done saving the session.
+        console.log(err);
+        res.redirect('/');
+        // and you can be sure that your session has been created here.
+      });
     })
     .catch((err) => console.log(err));
 };
