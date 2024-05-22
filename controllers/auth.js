@@ -21,19 +21,35 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
   // req.isLoggedIn = true;
   // res.setHeader('Set-Cookie', 'LoggedIn=true');
-  User.findById('663a2c6b2f23384c17625308')
+  User.findOne({ email: email })
     .then((user) => {
-      req.session.isLoggedIn = true;
-      req.session.user = user;
-      // res.redirect('/');
-      req.session.save((err) => {
-        //normally don't need to do that but you need to do it in scenarios where you need to be sure that,your session was created before you continue because here, you can pass in a function that will be called once you're done saving the session.
-        console.log(err);
-        res.redirect('/');
-        // and you can be sure that your session has been created here.
-      });
+      if (!user) {
+        return res.redirect('/login');
+      }
+      bcrypt
+        .compare(password, user.password)
+        .then((doMatch) => {
+          //with compare we'll only face an error if something goes wrong, not if the passwords do not match. In both a matching and a non-matching case,we make it into the then block and result will be a boolean that is true if the passwords are equal
+          if (doMatch) {
+            req.session.isLoggedIn = true;
+            req.session.user = user;
+            // res.redirect('/');
+            return req.session.save((err) => {
+              //normally don't need to do that but you need to do it in scenarios where you need to be sure that,your session was created before you continue because here, you can pass in a function that will be called once you're done saving the session.
+              console.log(err);
+              res.redirect('/');
+            });
+          }
+          res.redirect('/login');
+        })
+        .catch((err) => {
+          res.redirect('/login');
+        });
+      // and you can be sure that your session has been created here.
     })
     .catch((err) => console.log(err));
 };
