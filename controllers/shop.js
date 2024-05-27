@@ -167,7 +167,7 @@ exports.postOrders = (req, res, next) => {
       //I will simply not just extract items like this,I will also map the items so that I store the changed items in my products array and a mapped item should still have its quantity so I'll keep that, the i simply refers to the item since this function goes through all items in that array, so we'll have the quantity. And then we'll have a product field and the product
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user,
         },
         products: products,
