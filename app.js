@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBstore = require('connect-mongodb-session')(session);
+const flash = require('connect-flash');
 
 const errorController = require('./controllers/error');
 
@@ -33,6 +34,8 @@ app.use(
     store: store,
   })
 );
+
+app.use(flash());
 
 app.use((req, res, next) => {
   if (!req.session.user) {

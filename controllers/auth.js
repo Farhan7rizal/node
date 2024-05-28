@@ -5,14 +5,29 @@ exports.getLogin = (req, res, next) => {
   // const isLoggedIn = req.get('cookie').split('=')[1] === 'true';
   // console.log(isLoggedIn);
   // console.log(req.session);
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+  let message2 = req.flash('error2');
+  if (message2.length > 0) {
+    message2 = message2[0];
+  } else {
+    message2 = null;
+  }
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
     isAuthenticated: false,
+    errorMessage: message,
+    errorMessage2: message2,
   });
 };
 
 exports.getSignup = (req, res, next) => {
+  //also do flash message here to
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
@@ -28,6 +43,7 @@ exports.postLogin = (req, res, next) => {
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
+        req.flash('error', 'invalid email or password');
         return res.redirect('/login');
       }
       bcrypt
@@ -38,12 +54,14 @@ exports.postLogin = (req, res, next) => {
             req.session.isLoggedIn = true;
             req.session.user = user;
             // res.redirect('/');
+
             return req.session.save((err) => {
               //normally don't need to do that but you need to do it in scenarios where you need to be sure that,your session was created before you continue because here, you can pass in a function that will be called once you're done saving the session.
               console.log(err);
               res.redirect('/');
             });
           }
+          req.flash('error2', 'invalid password!');
           res.redirect('/login');
         })
         .catch((err) => {
