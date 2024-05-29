@@ -77,6 +77,9 @@ exports.postSignup = (req, res, next) => {
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
 
+  // sendgrid code : WSQSKVSPH8RXBVWJDFKV5KZY
+  // skip emailing
+
   User.findOne({ email: email })
     .then((userDoc) => {
       // console.log(userDoc);
