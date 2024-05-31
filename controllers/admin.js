@@ -84,7 +84,7 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.find()
+  Product.find({ userId: req.user._id })
     // .select('title imageUrl -_id')
     // .populate('userId', 'name')
     .then((products) => {
