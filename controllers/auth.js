@@ -86,6 +86,7 @@ exports.postSignup = (req, res, next) => {
       path: '/signup',
       pageTitle: 'Signup',
       isAuthenticated: false,
+
       // errorMessage: errors.array()[0].msg,
       // error message tidak bisa karena. is not defined duluan ketika baru masuk render
       //solusinya cari validator lain
