@@ -31,12 +31,17 @@ exports.getLogin = (req, res, next) => {
 
 exports.getSignup = (req, res, next) => {
   //also do flash message here to
-  const errors = validationResult(req);
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
     isAuthenticated: false,
-    errorMessage: '',
+    errorMessage: message,
   });
 };
 
@@ -51,6 +56,7 @@ exports.postLogin = (req, res, next) => {
         req.flash('error', 'invalid email or password');
         return res.redirect('/login');
       }
+
       bcrypt
         .compare(password, user.password)
         .then((doMatch) => {
@@ -87,7 +93,7 @@ exports.postSignup = (req, res, next) => {
   if (!errors.isEmpty()) {
     console.log(errors.array()[0].msg);
     // res.status(200).json(errors.array()[0].msg);
-    res.status(422).render('auth/signup', {
+    return res.status(422).render('auth/signup', {
       path: '/signup',
       pageTitle: 'Signup',
       isAuthenticated: false,
