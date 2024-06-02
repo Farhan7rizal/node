@@ -31,10 +31,12 @@ exports.getLogin = (req, res, next) => {
 
 exports.getSignup = (req, res, next) => {
   //also do flash message here to
+  const errors = validationResult(req);
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
     isAuthenticated: false,
+    errorMessage: '',
   });
 };
 
@@ -80,18 +82,22 @@ exports.postSignup = (req, res, next) => {
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
   const errors = validationResult(req);
+
+  // if (typeof errors !== 'undefined'){}
   if (!errors.isEmpty()) {
     console.log(errors.array()[0].msg);
-    return res.status(200).render('auth/signup', {
+    // res.status(200).json(errors.array()[0].msg);
+    res.status(422).render('auth/signup', {
       path: '/signup',
       pageTitle: 'Signup',
       isAuthenticated: false,
 
-      // errorMessage: errors.array()[0].msg,
+      errorMessage: errors.array()[0].msg,
       // error message tidak bisa karena. is not defined duluan ketika baru masuk render
       //solusinya cari validator lain
     });
   }
+
   // sendgrid code : WSQSKVSPH8RXBVWJDFKV5KZY
   // skip emailing
 
