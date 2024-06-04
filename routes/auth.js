@@ -1,6 +1,8 @@
 const express = require('express');
 const { check, body, validationResult } = require('express-validator');
 
+const User = require('../models/user');
+
 const authController = require('../controllers/auth');
 
 const router = express.Router();
@@ -18,10 +20,16 @@ router.post(
       .isEmail()
       .withMessage('email salah')
       .custom((value, { req }) => {
-        if (value === 'test@test.com') {
-          throw new Error('this email address is forbidden!');
-        }
-        return true;
+        // if (value === 'test@test.com') {
+        //   throw new Error('this email address is forbidden!');
+        // }
+        // return true;
+        return User.findOne({ email: value }).then((userDoc) => {
+          // console.log(userDoc);
+          if (userDoc) {
+            return Promise.reject('Email sudah ada!');
+          }
+        });
       }),
     body(
       'password',
@@ -29,6 +37,12 @@ router.post(
     )
       .isLength({ min: 5 })
       .isAlphanumeric(),
+    body('confirmPassword').custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Password have to match!');
+      }
+      return true;
+    }),
   ],
   authController.postSignup
 );

@@ -50,6 +50,21 @@ exports.postLogin = (req, res, next) => {
   const password = req.body.password;
   // req.isLoggedIn = true;
   // res.setHeader('Set-Cookie', 'LoggedIn=true');
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array()[0].msg);
+
+    return res.status(422).render('auth/login', {
+      path: '/login',
+      pageTitle: 'login',
+      isAuthenticated: false,
+
+      errorMessage: errors.array()[0].msg,
+    });
+  }
+
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
@@ -72,7 +87,7 @@ exports.postLogin = (req, res, next) => {
               res.redirect('/');
             });
           }
-          req.flash('error2', 'invalid password!');
+          req.flash('error', 'invalid password!');
           res.redirect('/login');
         })
         .catch((err) => {
@@ -107,30 +122,33 @@ exports.postSignup = (req, res, next) => {
   // sendgrid code : WSQSKVSPH8RXBVWJDFKV5KZY
   // skip emailing
 
-  User.findOne({ email: email })
-    .then((userDoc) => {
-      // console.log(userDoc);
-      if (userDoc) {
-        return res.redirect('/signup');
-      }
-      return bcrypt
-        .hash(password, 12)
-        .then((hashedPassword) => {
-          const user = new User({
-            email: email,
-            password: hashedPassword,
-            cart: { items: [] },
-          });
-          return user.save();
-        })
-        .then((result) => {
-          res.redirect('/login');
+  // User.findOne({ email: email })
+  //   .then((userDoc) => {
+  //     // console.log(userDoc);
+  //     if (userDoc) {
+  //       req.flash('error', 'E-mail sudah ada!');
+  //       return res.redirect('/signup');
+  //     }
+  return (
+    bcrypt
+      .hash(password, 12)
+      .then((hashedPassword) => {
+        const user = new User({
+          email: email,
+          password: hashedPassword,
+          cart: { items: [] },
         });
-    })
+        return user.save();
+      })
+      .then((result) => {
+        res.redirect('/login');
+      })
+      // })
 
-    .catch((err) => {
-      console.log(err);
-    });
+      .catch((err) => {
+        console.log(err);
+      })
+  );
 };
 
 exports.postLogout = (req, res, next) => {
