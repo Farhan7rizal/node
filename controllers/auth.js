@@ -3,6 +3,7 @@ const { check, validationResult } = require('express-validator');
 
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
+const { error } = require('console');
 
 exports.getLogin = (req, res, next) => {
   // const isLoggedIn = req.get('cookie').split('=')[1] === 'true';
@@ -47,6 +48,7 @@ exports.getSignup = (req, res, next) => {
       password: '',
       confirmPassword: '',
     },
+    validationErrors: [],
   });
 };
 
@@ -111,7 +113,7 @@ exports.postSignup = (req, res, next) => {
 
   // if (typeof errors !== 'undefined'){}
   if (!errors.isEmpty()) {
-    console.log(errors.array()[0].msg);
+    console.log(errors.array()[0]);
     // res.status(200).json(errors.array()[0].msg);
     return res.status(422).render('auth/signup', {
       path: '/signup',
@@ -124,6 +126,7 @@ exports.postSignup = (req, res, next) => {
         password: password,
         confirmPassword: confirmPassword,
       },
+      validationErrors: errors.array(),
     });
   }
 
