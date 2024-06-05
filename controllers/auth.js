@@ -42,6 +42,11 @@ exports.getSignup = (req, res, next) => {
     pageTitle: 'Signup',
     isAuthenticated: false,
     errorMessage: message,
+    oldInput: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
   });
 };
 
@@ -114,8 +119,11 @@ exports.postSignup = (req, res, next) => {
       isAuthenticated: false,
 
       errorMessage: errors.array()[0].msg,
-      // error message tidak bisa karena. is not defined duluan ketika baru masuk render
-      //solusinya cari validator lain
+      oldInput: {
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+      },
     });
   }
 
