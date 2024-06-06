@@ -17,7 +17,13 @@ router.get('/signup', authController.getSignup);
 
 router.post(
   '/login',
-  check('email').isEmail().withMessage('email salah'),
+  [
+    check('email').isEmail().withMessage('email salah').normalizeEmail(),
+    body('password', 'password harus sama')
+      .isLength({ min: 5 })
+      .isAlphanumeric()
+      .trim(),
+  ],
   authController.postLogin
 );
 
@@ -27,6 +33,7 @@ router.post(
     check('email')
       .isEmail()
       .withMessage('email salah')
+
       .custom((value, { req }) => {
         // if (value === 'test@test.com') {
         //   throw new Error('this email address is forbidden!');
@@ -38,13 +45,15 @@ router.post(
             return Promise.reject('Email sudah ada!');
           }
         });
-      }),
+      })
+      .normalizeEmail(),
     body(
       'password',
       'this is default messages for every withMessage(), and your password at least 5 charecter'
     )
       .isLength({ min: 5 })
-      .isAlphanumeric(),
+      .isAlphanumeric()
+      .trim(),
     body('confirmPassword').custom((value, { req }) => {
       if (value !== req.body.password) {
         throw new Error('Password have to match!');
