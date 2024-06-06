@@ -26,7 +26,11 @@ exports.getLogin = (req, res, next) => {
     pageTitle: 'Login',
     isAuthenticated: false,
     errorMessage: message,
-    errorMessage2: message2,
+    oldInput: {
+      email: '',
+      password: '',
+    },
+    validationErrors: [],
   });
 };
 
@@ -69,17 +73,32 @@ exports.postLogin = (req, res, next) => {
       isAuthenticated: false,
 
       errorMessage: errors.array()[0].msg,
+      oldInput: {
+        email: email,
+        password: password,
+      },
+      validationErrors: errors.array(),
     });
   }
 
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
-        req.flash('error', 'invalid email or password');
-        return res.redirect('/login');
+        return res.status(422).render('auth/login', {
+          path: '/login',
+          pageTitle: 'login',
+          isAuthenticated: false,
+
+          errorMessage: 'invalid email or password',
+          oldInput: {
+            email: email,
+            password: password,
+          },
+          validationErrors: errors.array(),
+        });
       }
 
-      bcrypt
+      return bcrypt
         .compare(password, user.password)
         .then((doMatch) => {
           //with compare we'll only face an error if something goes wrong, not if the passwords do not match. In both a matching and a non-matching case,we make it into the then block and result will be a boolean that is true if the passwords are equal
@@ -94,8 +113,18 @@ exports.postLogin = (req, res, next) => {
               res.redirect('/');
             });
           }
-          req.flash('error', 'invalid password!');
-          res.redirect('/login');
+          return res.status(422).render('auth/login', {
+            path: '/login',
+            pageTitle: 'login',
+            isAuthenticated: false,
+
+            errorMessage: 'invalid email or password',
+            oldInput: {
+              email: email,
+              password: password,
+            },
+            validationErrors: errors.array(),
+          });
         })
         .catch((err) => {
           res.redirect('/login');

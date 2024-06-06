@@ -7,11 +7,19 @@ const authController = require('../controllers/auth');
 
 const router = express.Router();
 
-router.get('/login', authController.getLogin);
+router.get(
+  '/login',
+
+  authController.getLogin
+);
 
 router.get('/signup', authController.getSignup);
 
-router.post('/login', authController.postLogin);
+router.post(
+  '/login',
+  check('email').isEmail().withMessage('email salah'),
+  authController.postLogin
+);
 
 router.post(
   '/signup',
