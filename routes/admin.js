@@ -18,10 +18,17 @@ router.get('/products', isAuth, adminController.getProducts);
 router.post(
   '/add-product',
   [
-    body('title').isString().isLength({ min: 3 }).trim(),
-    body('imageUrl').isURL(),
-    body('price').isFloat(),
-    body('description').isLength({ min: 5, max: 400 }).trim(),
+    body('title')
+      .isString()
+      .withMessage('judul salah')
+      .isLength({ min: 3 })
+      .trim(),
+    body('imageUrl').isURL().withMessage('judul salah'),
+    body('price').isFloat().withMessage('judul salah'),
+    body('description')
+      .isLength({ min: 5, max: 400 })
+      .trim()
+      .withMessage('judul salah'),
   ],
   isAuth,
   adminController.postAddProduct
@@ -31,7 +38,16 @@ router.get('/edit-product/:productId', isAuth, adminController.getEditProduct);
 
 router.post(
   '/edit-product',
-
+  [
+    body('title')
+      .isString()
+      .withMessage('judul salah')
+      .isLength({ min: 3 })
+      .trim(),
+    body('imageUrl').isURL(),
+    body('price').isFloat(),
+    body('description').isLength({ min: 5, max: 400 }).trim(),
+  ],
   isAuth,
   adminController.postEditProduct
 );

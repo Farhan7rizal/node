@@ -10,6 +10,7 @@ exports.getAddProduct = (req, res, next) => {
     path: '/admin/add-product',
     editing: false,
     isAuthenticated: req.session.isLoggedIn,
+    validationErrors: [],
     hasError: false,
     errorMessage: null,
   });
@@ -24,8 +25,9 @@ exports.postAddProduct = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
+    console.log(errors.array()[0]);
     return res.status(422).render('admin/edit-product', {
-      pageTitle: 'Edit Product',
+      pageTitle: 'Add Product',
       path: '/admin/edit-product',
       editing: false,
       hasError: true,
@@ -36,6 +38,7 @@ exports.postAddProduct = (req, res, next) => {
         description: description,
       },
       errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array(),
       isAuthenticated: req.session.isLoggedIn,
     });
   }
@@ -77,6 +80,7 @@ exports.getEditProduct = (req, res, next) => {
         product: product,
         hasError: false,
         errorMessage: null,
+        validationErrors: errors.array(),
         isAuthenticated: req.session.isLoggedIn,
       });
     })
@@ -91,6 +95,27 @@ exports.postEditProduct = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedPrice = req.body.price;
   const updatedDescription = req.body.description;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render('admin/edit-product', {
+      pageTitle: 'Edit Product',
+      path: '/admin/edit-product',
+      editing: true,
+      hasError: true,
+      product: {
+        title: updatedTitle,
+        imageUrl: updatedImageUrl,
+        price: updatedPrice,
+        description: updatedDescription,
+        _id: prodId,
+      },
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array(),
+      isAuthenticated: req.session.isLoggedIn,
+    });
+  }
 
   Product.findById(prodId)
     .then((product) => {
