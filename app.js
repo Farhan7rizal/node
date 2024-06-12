@@ -43,15 +43,23 @@ app.use((req, res, next) => {
   }
   User.findById(req.session.user._id)
     .then((user) => {
+      if (!user) {
+        //wisely not stored a undefined object
+        return next();
+      }
       req.user = user;
       next();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      throw new Error(err);
+    });
 });
 
 app.use('/admin', adminRoutes.routes);
 app.use(shopRoutes);
 app.use(authRoutes);
+
+app.get('/500', errorController.get500);
 
 // app.use((req, res, next) => {
 //   res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
