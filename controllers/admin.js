@@ -45,7 +45,7 @@ exports.postAddProduct = (req, res, next) => {
     });
   }
   const product = new Product({
-    _id: new mongoose.Types.ObjectId('663b6c5f82469b9657304c77'),
+    // _id: new mongoose.Types.ObjectId('663b6c5f82469b9657304c77'),
     title: title,
     imageUrl: imageUrl,
     price: price,
@@ -77,7 +77,11 @@ exports.postAddProduct = (req, res, next) => {
       //   validationErrors: [],
       //   isAuthenticated: req.session.isLoggedIn,
       // });
-      res.redirect('/500');
+      // res.redirect('/500');
+
+      const error = new Error(err);
+      error.statusCode = 500;
+      return next(error); // handling error with next(error)
     }); //don't forget to return in save() models
 };
 
@@ -90,6 +94,7 @@ exports.getEditProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then((product) => {
+      // throw new Error('dummy!');
       if (!product) {
         return res.redirect('/');
       }
@@ -106,6 +111,9 @@ exports.getEditProduct = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      error.statusCode = 500;
+      return next(error); // handling error with next(error)
     });
 };
 
