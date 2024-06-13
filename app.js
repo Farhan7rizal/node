@@ -38,11 +38,13 @@ app.use(
 app.use(flash());
 
 app.use((req, res, next) => {
+  // throw new Error('Dummy!');
   if (!req.session.user) {
     return next();
   }
   User.findById(req.session.user._id)
     .then((user) => {
+      throw new Error('Dummy!');
       if (!user) {
         //wisely not stored a undefined object
         return next();
@@ -51,7 +53,8 @@ app.use((req, res, next) => {
       next();
     })
     .catch((err) => {
-      throw new Error(err);
+      // throw new Error(err); //instead using this, use bellow, next(...)
+      next(new Error(err));
     });
 });
 
@@ -72,7 +75,12 @@ app.use(errorController.get404);
 
 app.use((error, req, res, next) => {
   // res.status(error.httpStatusCode).render(...);
-  res.redirect('/500');
+  // res.redirect('/500'); //instead using this, use bellow to render /500
+  res.status(500).render('error/500', {
+    pageTitle: 'Page Not Found',
+    path: '/500',
+    isAuthenticated: req.session.isLoggedIn,
+  });
 });
 
 // mongoConnect((client) => {
