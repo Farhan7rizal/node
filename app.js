@@ -54,7 +54,7 @@ app.use((req, res, next) => {
     })
     .catch((err) => {
       // throw new Error(err); //instead using this, use bellow, next(...)
-      next(new Error(err));
+      next(new Error(err)); //to avoid infinite loop, and throw new error in asyn and sync code, but inside promise then and block, or inside callback
     });
 });
 
