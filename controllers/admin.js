@@ -20,9 +20,10 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  const imageUrl = req.body.image;
   const price = req.body.price;
   const description = req.body.description;
+  console.log(imageUrl);
 
   const errors = validationResult(req);
 
@@ -172,7 +173,7 @@ exports.getProducts = (req, res, next) => {
     // .select('title imageUrl -_id')
     // .populate('userId', 'name')
     .then((products) => {
-      console.log(products);
+      // console.log(products);
       //select() allows you to define which fields you want to select or unselect
       // populate() allows you to tell mongoose to populate a certain field with all the detail information and not just the ID,
       res.render('admin/products', {
