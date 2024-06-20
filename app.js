@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBstore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
+const multer = require('multer');
 
 const errorController = require('./controllers/error');
 
@@ -13,6 +14,15 @@ const MONGODB_URI = 'mongodb://localhost:27017/shop2';
 
 const app = express();
 const store = new MongoDBstore({ uri: MONGODB_URI, collection: 'sessions' });
+const dateName = new Date().toDateString();
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, dateName + ' ' + file.originalname);
+  },
+});
 
 app.set('view engine', 'ejs');
 app.set('views', 'views'); //views in views folder
@@ -25,6 +35,8 @@ const authRoutes = require('./routes/auth');
 const User = require('./models/user');
 
 app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(multer({ dest: 'images' }).single('image'));
+app.use(multer({ storage: fileStorage }).single('image'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
@@ -58,6 +70,11 @@ app.use((req, res, next) => {
     });
 });
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  next();
+});
+
 app.use('/admin', adminRoutes.routes);
 app.use(shopRoutes);
 app.use(authRoutes);
@@ -79,7 +96,7 @@ app.use((error, req, res, next) => {
   res.status(500).render('error/500', {
     pageTitle: 'Page Not Found',
     path: '/500',
-    isAuthenticated: req.session.isLoggedIn,
+    isAuthenticated: true,
   });
 });
 
@@ -102,7 +119,7 @@ mongoose
     //   }
     // });
     // console.log('connect');
-    app.listen(3000);
+    app.listen(3001);
   })
   .catch((err) => {
     console.log(err);

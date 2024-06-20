@@ -11,7 +11,7 @@ exports.getAddProduct = (req, res, next) => {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false,
-    isAuthenticated: req.session.isLoggedIn,
+
     validationErrors: [],
     hasError: false,
     errorMessage: null,
@@ -20,7 +20,7 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.image;
+  const imageUrl = req.file;
   const price = req.body.price;
   const description = req.body.description;
   console.log(imageUrl);
@@ -42,7 +42,6 @@ exports.postAddProduct = (req, res, next) => {
       },
       errorMessage: errors.array()[0].msg,
       validationErrors: errors.array(),
-      isAuthenticated: req.session.isLoggedIn,
     });
   }
   const product = new Product({
@@ -76,7 +75,7 @@ exports.postAddProduct = (req, res, next) => {
       //   },
       //   errorMessage: 'Database operation failed, please try again!',
       //   validationErrors: [],
-      //   isAuthenticated: req.session.isLoggedIn,
+      //
       // });
       // res.redirect('/500');
 
@@ -107,7 +106,6 @@ exports.getEditProduct = (req, res, next) => {
         hasError: false,
         errorMessage: null,
         validationErrors: errors.array(),
-        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -142,7 +140,6 @@ exports.postEditProduct = (req, res, next) => {
       },
       errorMessage: errors.array()[0].msg,
       validationErrors: errors.array(),
-      isAuthenticated: req.session.isLoggedIn,
     });
   }
 
@@ -180,7 +177,6 @@ exports.getProducts = (req, res, next) => {
         prods: products,
         pageTitle: 'Admin Products',
         path: '/admin/products',
-        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
