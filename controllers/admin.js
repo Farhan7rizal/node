@@ -134,32 +134,11 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-  const editMode = req.query.edit;
-
-  if (!editMode) {
-    return res.redirect('/');
-  }
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const image = req.file;
   const updatedPrice = req.body.price;
   const updatedDescription = req.body.description;
-
-  if (!image) {
-    return res.status(422).render('admin/edit-product', {
-      pageTitle: 'Add Product',
-      path: '/admin/edit-product',
-      editing: editMode,
-      hasError: true,
-      product: {
-        title: title,
-        price: price,
-        description: description,
-      },
-      errorMessage: 'attached file is not an image!',
-      validationErrors: [],
-    });
-  }
 
   const errors = validationResult(req);
 
@@ -170,9 +149,10 @@ exports.postEditProduct = (req, res, next) => {
       editing: true,
       hasError: true,
       product: {
-        title: title,
-        price: price,
-        description: description,
+        title: updatedTitle,
+        price: updatedPrice,
+        description: updatedDescription,
+        _id: prodId,
       },
       errorMessage: errors.array()[0].msg,
       validationErrors: errors.array(),
@@ -195,7 +175,6 @@ exports.postEditProduct = (req, res, next) => {
         res.redirect('/admin/products');
       });
     })
-
     .catch((err) => {
       const error = new Error(err);
       error.statusCode = 500;
