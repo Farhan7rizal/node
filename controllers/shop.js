@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const pdfkit = require('pdfkit');
+
 const Product = require('../models/product');
 const Order = require('../models/order');
 // const { or } = require('sequelize');
@@ -220,6 +222,15 @@ exports.getInvoice = (req, res, next) => {
   const orderId = req.params.orderId;
   const invoiceName = 'invoice-' + orderId + '.pdf';
   const invoicePath = path.join('data', 'invoices', invoiceName);
+
+  //   const pdfDoc = new PDFDocument();
+  // pdfDoc.pipe(fs.createWriteStream(invoicePath));
+  // pdfDoc.pipe(res);
+
+  // pdfDoc.text('Hello World!');
+
+  // pdfDoc.end();
+
   fs.readFile(invoicePath, (err, data) => {
     if (err) {
       return next(err);
