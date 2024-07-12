@@ -7,6 +7,8 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 // const { or } = require('sequelize');
 
+const ITEM_PER_PAGES = 2;
+
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then((products) => {
@@ -42,7 +44,11 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
+  const page = req.query.page;
+
   Product.find()
+    .skip((page - 1) * ITEM_PER_PAGES)
+    .limit(ITEM_PER_PAGES)
     .then((products) => {
       // console.log(products);
       res.render('shop/index', {
