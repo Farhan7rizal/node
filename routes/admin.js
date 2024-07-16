@@ -39,7 +39,8 @@ router.post(
   adminController.postEditProduct
 );
 
-router.post('/delete-product', isAuth, adminController.postDeleteProduct);
+//http method, intro to API or REST
+router.delete('/product/:productId', isAuth, adminController.deleteProduct);
 
 // module.exports = router;
 exports.routes = router;
